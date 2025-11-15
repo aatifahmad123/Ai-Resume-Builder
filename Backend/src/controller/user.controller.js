@@ -106,11 +106,14 @@ const loginUser = async (req, res) => {
       { expiresIn: process.env.JWT_SECRET_EXPIRES_IN } // Add token expiration for better security
     );
 
+
     const cookieOptions = {
       httpOnly: true,
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // Set cookie to expire in 1 day
-      sameSite: process.env.NODE_ENV == "Dev" ? "lax" : "none", // Set SameSite attribute for better security
-      secure: process.env.NODE_ENV == "Dev" ? false : true, // Set Secure attribute for better security
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      sameSite: "none",
+      secure: true,
+      domain: ".onrender.com", // 🔥 required for cross-site cookie
+      path: "/",               // ensure cookie is sent for all routes
     };
     
 
